@@ -1,0 +1,44 @@
+{{- if (.Values.isLB) }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: jpetstoreweb
+  name: jpetstore-nodeport
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 9080
+  selector:
+    app: jpetstoreweb
+{{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  labels:
+    app: jpetstoredb
+spec:
+  selector:
+    app: jpetstoredb
+  ports:
+  - port: 3306
+    targetPort: 3306
+
+---
+{{- if not (.Values.isLB) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  labels:
+    app: jpetstoreweb
+spec:
+  selector:
+    app: jpetstoreweb
+  ports:
+  - port: 80
+    targetPort: 9080
+{{- end }}

@@ -1,0 +1,27 @@
+{{- if not (.Values.isLB) }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jpetstoreweb
+  annotations:
+    {{ if not (.Values.isIKS) }}
+    kubernetes.io/ingress.class: addon-http-application-routing
+    {{ else }}
+    ingress.bluemix.net/hsts: enabled=true maxAge=31536000 includeSubdomains=true
+    {{ end }}
+  labels:
+    app: jpetstoreweb
+spec:
+  rules:
+  - host: "jpetstore-web.{{ .Values.httpHost }}"
+    http:
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service: 
+              name: web
+              port:
+                number: 80
+      
+{{- end }}
