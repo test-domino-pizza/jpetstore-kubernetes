@@ -31,6 +31,8 @@ class Tester:
             subprocess.getoutput(command)
             endTime = datetime.datetime.now()
             self.durationSeconds =int( ( endTime - startTime ).seconds)
+            if self.durationSeconds <= 0:
+                self.durationSeconds = 1
             self.status = "passed"
             self.passed = 20
             self.failed = 0 
