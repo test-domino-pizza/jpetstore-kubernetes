@@ -20,6 +20,7 @@ class Builder:
         self.commit = os.getenv("COMMIT_NUMBER", commitNumber)
         self.details = details
         self.duration = -1
+        self.durationInNano = -1
         self.endpoint_hostname = os.getenv("JENKINS_URL", hostname)
         self.endpoint_technical_service_id = hostname.replace(":","_")
         self.event_type = "push"
@@ -107,6 +108,7 @@ class Builder:
             )
             self.build_status = "failed"
             self.duration = (endTime - startTime).microseconds * 10000
+            self.durationInNano = self.duration
             return {
                 "buildDuration": endTime - startTime,
                 "buildStatus" : self.build_status
