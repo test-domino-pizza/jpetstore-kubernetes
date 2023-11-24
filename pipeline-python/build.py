@@ -88,6 +88,7 @@ class Builder:
                 self.build_status = "failed"
                 endTime = datetime.datetime.now()
                 self.duration = (endTime - startTime).microseconds * 10000
+                self.durationInNano = self.duration
                 return {
                 "buildDuration": self.duration,
                 "buildStatus" : self.build_status
@@ -96,6 +97,7 @@ class Builder:
             endTime = datetime.datetime.now()
             self.build_status = "passed"
             self.duration = (endTime - startTime).microseconds * 1000
+            self.durationInNano = self.duration
             return {
                 "buildDuration": self.duration,
                 "buildStatus" : self.build_status
@@ -168,7 +170,7 @@ if __name__ == "__main__":
     LOGGER.info(
         buildtest.__dict__
     )
-    LOGGER.info(
-        buildtest.post_data_into_tenant(tenantUrl="https://mcmp-explore-jamesxavier2-mar16-220316202344.multicloud-ibm.com/", buildToken="")
-    )
+    # LOGGER.info(
+    #     buildtest.post_data_into_tenant(tenantUrl="https://mcmp-explore-jamesxavier2-mar16-220316202344.multicloud-ibm.com/", buildToken="")
+    # )
 
