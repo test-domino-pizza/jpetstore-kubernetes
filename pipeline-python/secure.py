@@ -334,6 +334,6 @@ if __name__ == "__main__":
     print(
         secure.publish_secure_licenses(
             tenant_url="https://mcmp-learn.multicloud-ibm.com",
-            secureToken="xBY-7RXdXRM0ZY3dNg4oMz8WMAQKBBbIf1vE_iLFYDW2tJMM43N0i1aKK4iVX4bQ"
+            secureToken=""
         )
     )
