@@ -148,7 +148,7 @@ if __name__ == "__main__":
         dockerUser="mcmpdemo",
         imageTag="latest",
         tenantUserID="625090e80f8c6927409061d4", #mariobv userid
-        tenantUserApiKey="ca10f694-8dd2-596b-a3c1-d3df9c5a27db", #replace this
+        tenantUserApiKey="", #replace this
         tenantApi="https://mcmp-learn-api.multicloud-ibm.com",
         orderNumber="6JKY1AMSY4"
     )

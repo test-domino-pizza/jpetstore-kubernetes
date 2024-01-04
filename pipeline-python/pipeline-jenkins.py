@@ -154,7 +154,7 @@ def petstore_pipeline(  params: dict  ):
         publishToTenant=True
      )
 
-    secure_Petstore(tenantUrl=params["tenant_url"], secureToken=params["secure_token"])
+    #secure_Petstore(tenantUrl=params["tenant_url"], secureToken=params["secure_token"])
     successfulOperation = deployMonitoring.deploy_petstore_monitoring()
     if not successfulOperation:
         LOGGER.error("Unable to install monitoring")
