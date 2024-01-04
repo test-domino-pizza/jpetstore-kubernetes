@@ -314,11 +314,12 @@ def publish_sample_dcheck(tenantUrl, secureToken, technicalService="sample_data"
 def publishSecureData(tenantUrl, secureToken):
     secure = Secure()
     publishSL = secure.publish_secure_licenses(tenantUrl, secureToken)
-    publishVS = secure.publish_vulnerability_scan(tenantUrl, secureToken,)
+    # publishVS = secure.publish_vulnerability_scan(tenantUrl, secureToken,) TODO: Needs a fix, something changed in the url
     publishSS = secure.publish_static_scan( tenantUrl, secureToken,  )
     publishDT = publish_sample_dcheck(tenantUrl, secureToken, technicalService=secure.technical_service_name)
 
-    if publishSL and publishVS and publishSS and publishDT:
+    #TODO: add the publishVS result to the condition
+    if publishSL  and publishSS and publishDT:
         return True
     return False
 
