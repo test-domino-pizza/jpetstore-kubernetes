@@ -28,4 +28,4 @@ stages:
         containerRegistry: 'mcmpdemo'
         repository: 'mcmpdemo/jpetstore-web'
         command: 'buildAndPush'
-        Dockerfile: '**/jpetstore-web/Dockerfile'
+        Dockerfile: '**/jpetstore/Dockerfile'
