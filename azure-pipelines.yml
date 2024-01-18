@@ -21,10 +21,11 @@ stages:
       vmImage: ubuntu-latest
     steps:
 
+    
     - task: Docker@2
       displayName: Build and push petstore web
       inputs:
+        containerRegistry: 'mcmpdemo'
         repository: 'mcmpdemo/jpetstore-web'
         command: 'buildAndPush'
-        Dockerfile: '**/jpetstore/Dockerfile'
-
+        Dockerfile: '**/'
