@@ -6,7 +6,9 @@ trigger:
 - master
 
 resources:
-- repo: self
+  webhooks:
+    - webhook: ModernOps
+      connection: ModernOps
 
 variables:
   tag: '$(Build.BuildId)'
