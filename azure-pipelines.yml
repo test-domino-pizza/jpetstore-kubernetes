@@ -31,3 +31,9 @@ stages:
         repository: 'mcmpdemo/jpetstore-web'
         command: 'buildAndPush'
         Dockerfile: '**/jpetstore/Dockerfile'
+
+    - task: PythonScript@0
+      inputs:
+        scriptSource: 'filePath'
+        scriptPath: 'pipeline-python/demo_DI_publish.py'
+        arguments: '--tenant https://learnmodernops-api.bridge.kyndryl.com/ --build_token $(BUILD_TOKEN)'
