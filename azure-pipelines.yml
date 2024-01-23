@@ -12,7 +12,7 @@ resources:
 
 variables:
   ORDER_ID: '${{ parameters.WebHook.resource.message.title }}'
-  tag: '$(Build.BuildId)'
+  
 
 stages:
 - stage: Build
