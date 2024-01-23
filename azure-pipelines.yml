@@ -2,8 +2,7 @@
 # Build a Docker image
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
-trigger:
-- master
+
 
 resources:
   webhooks:
@@ -11,8 +10,6 @@ resources:
       connection: ModernOps
 
 variables:
-  ORDER_ID: '$(ORDER_ID)'
-  FULFILLMENT_ID: '$(FULFILLMENT_ID:)'
   tag: '$(Build.BuildId)'
 
 stages:
