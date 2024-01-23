@@ -18,93 +18,93 @@ parser.add_argument("-BT", "--build_token", dest = "buildToken", default = "", h
 
 args = parser.parse_args()
 
-def post_secure_licenses( tenantUrl, secureToken, technicalService="vra_demo", date=datetime.datetime.utcnow().isoformat("T")+"Z" ):
+# def post_secure_licenses( tenantUrl, secureToken, technicalService="vra_demo", date=datetime.datetime.utcnow().isoformat("T")+"Z" ):
 
 
-    try:
+#     try:
 
-        tenantUrl = sanitazeTenantUrl(tenantUrl)
-        licenseTool = random.choice( [ "pipLicense", "licenseFinder",  ] )
-        ENDPOINT = f"{tenantUrl}dash/api/dev_secops/v3/technical-services/license-scan?scannedBy={licenseTool}&scannedTime={date}"
-        scan = {"dependency_licenses": []}
+#         tenantUrl = sanitazeTenantUrl(tenantUrl)
+#         licenseTool = random.choice( [ "pipLicense", "licenseFinder",  ] )
+#         ENDPOINT = f"{tenantUrl}dash/api/dev_secops/v3/technical-services/license-scan?scannedBy={licenseTool}&scannedTime={date}"
+#         scan = {"dependency_licenses": []}
 
-        for _ in range(random.randint(1,2)):
+#         for _ in range(random.randint(1,2)):
 
-            license = DependencyLicenseTemplate()
+#             license = DependencyLicenseTemplate()
             
-            licenseData = random.choice( LICENSES )
-            license.dependency_name =  licenseData['Package Name']
-            license.dependency_version = "v{0}.{1}.{2}".format(random.randint(0,16),random.randint(0,16),random.randint(0,16))
-            license.dependency_homepage = "https://www.github.com/{0}".format(licenseData["License Name"].replace(" ", ""))
-            license.dependency_install_path = "/src/node_modules/{0}".format(licenseData["License Name"].replace(" ", ""))
-            license.dependency_package_manager = "node"
-            license.license_name = licenseData['License Name']
-            license.license_link = "https://www.{0}.com/{1}".format(licenseData["License Name"].replace(" ", ""),str(uuid.uuid4()))
-            license.status = licenseData["Status"]
-            license.provider_href = "https://pypi.org/"
-            license.technical_service_name = technicalService
-            license.technicalserviceoverride = True
+#             licenseData = random.choice( LICENSES )
+#             license.dependency_name =  licenseData['Package Name']
+#             license.dependency_version = "v{0}.{1}.{2}".format(random.randint(0,16),random.randint(0,16),random.randint(0,16))
+#             license.dependency_homepage = "https://www.github.com/{0}".format(licenseData["License Name"].replace(" ", ""))
+#             license.dependency_install_path = "/src/node_modules/{0}".format(licenseData["License Name"].replace(" ", ""))
+#             license.dependency_package_manager = "node"
+#             license.license_name = licenseData['License Name']
+#             license.license_link = "https://www.{0}.com/{1}".format(licenseData["License Name"].replace(" ", ""),str(uuid.uuid4()))
+#             license.status = licenseData["Status"]
+#             license.provider_href = "https://pypi.org/"
+#             license.technical_service_name = technicalService
+#             license.technicalserviceoverride = True
 
-            scan["dependency_licenses"].append( license.__dict__ )
+#             scan["dependency_licenses"].append( license.__dict__ )
 
 
-        payload = scan
-        payload["technical_service_name"] = technicalService
-        payload["technicalserviceoverride"] = True
+#         payload = scan
+#         payload["technical_service_name"] = technicalService
+#         payload["technicalserviceoverride"] = True
 
-        headers = { 'Authorization': 'TOKEN ' + secureToken, 'Content-Type': 'application/json', 'accept': 'application/json' }
+#         headers = { 'Authorization': 'TOKEN ' + secureToken, 'Content-Type': 'application/json', 'accept': 'application/json' }
         
-        LOGGER.info( f"Dependency licenses sample payload: {payload}" )
+#         LOGGER.info( f"Dependency licenses sample payload: {payload}" )
 
-        response, successfullyPosted, errorMessage = make_web_request(url=ENDPOINT, requestMethod=requests.post, payload=payload, headers=headers, logToIBM=True)
+#         response, successfullyPosted, errorMessage = make_web_request(url=ENDPOINT, requestMethod=requests.post, payload=payload, headers=headers, logToIBM=True)
 
-        LOGGER.info( f"Dependency licenses: {response.status_code if response else 'None'}" )
+#         LOGGER.info( f"Dependency licenses: {response.status_code if response else 'None'}" )
         
 
-    except Exception as e:
+#     except Exception as e:
 
-        LOGGER.error(str(e))
-        return False, str(e)
+#         LOGGER.error(str(e))
+#         return False, str(e)
 
-    return successfullyPosted
+#     return successfullyPosted
 
 
-def post_sample_deploy_data(   tenantUrl:str, deployToken: str, deployDate=datetime.datetime.utcnow().isoformat("T") + "Z", technicalService="sample_data", release=f'release-{time.strftime("%Y.%m.%d")}', status=random.choice(['Failed','Deployed']) ):
-    tenantUrl = sanitazeTenantUrl(tenantUrl)
-    endpointUrl = f"{tenantUrl}dash/api/deployments/v4/technical-services/deployments"
+# def post_sample_deploy_data(   tenantUrl:str, deployToken: str, deployDate=datetime.datetime.utcnow().isoformat("T") + "Z", technicalService="sample_data", release=f'release-{time.strftime("%Y.%m.%d")}', status=random.choice(['Failed','Deployed']) ):
+#     tenantUrl = sanitazeTenantUrl(tenantUrl)
+#     endpointUrl = f"{tenantUrl}dash/api/deployments/v4/technical-services/deployments"
 
-    payload = {
-                'creation_date': deployDate, 
-               'deploymentid': "VRA_" + str(uuid.uuid4()), 
-               'duration': nanoseconds_to_microseconds( int( os.getenv( "elapsed_time", random.randint(6005720000,900572000000) ) ) ), 
-               'endpoint_hostname': 'Do not apply', 
-               'endpoint_technical_service_id': os.getenv("BUILD_URL", 'http://13.82.103.214:8080'), 
-               'name': f'VRA_deployment_{release}', 
-               'provider': os.getenv("DI_PROVIDER" ,"VRA"),
-               'providerhref': os.getenv("BUILD_URL", 'http://13.82.103.214:8080'), 
-               'technical_service_name': technicalService, 
-               'technicalserviceoverride': True, 
-               'status': status, 
-               'tool': 'Jenkins', 
-               'release': release, 
-               'environment': 'production', 
-               'isproduction': True
-            }
+#     payload = {
+#                 'creation_date': deployDate, 
+#                'deploymentid': "VRA_" + str(uuid.uuid4()), 
+#                'duration': nanoseconds_to_microseconds( int( os.getenv( "elapsed_time", random.randint(6005720000,900572000000) ) ) ), 
+#                'endpoint_hostname': 'Do not apply', 
+#                'endpoint_technical_service_id': os.getenv("BUILD_URL", 'http://13.82.103.214:8080'), 
+#                'name': f'VRA_deployment_{release}', 
+#                'provider': os.getenv("DI_PROVIDER" ,"VRA"),
+#                'providerhref': os.getenv("BUILD_URL", 'http://13.82.103.214:8080'), 
+#                'technical_service_name': technicalService, 
+#                'technicalserviceoverride': True, 
+#                'status': status, 
+#                'tool': 'Jenkins', 
+#                'release': release, 
+#                'environment': 'production', 
+#                'isproduction': True
+#             }
     
-    LOGGER.info(f"Deploy sample payload: {payload}")
-    headers = {
-        "Authorization": f"TOKEN {deployToken}",
-        "Content-Type": "application/json",
-        "accept": "application/json"
-    }
+#     LOGGER.info(f"Deploy sample payload: {payload}")
+#     headers = {
+#         "Authorization": f"TOKEN {deployToken}",
+#         "Content-Type": "application/json",
+#         "accept": "application/json"
+#     }
 
-    response, success, errorMessage = make_web_request(url=endpointUrl, payload=payload, headers=headers, requestMethod=requests.post)
+#     response, success, errorMessage = make_web_request(url=endpointUrl, payload=payload, headers=headers, requestMethod=requests.post)
 
-    LOGGER.info(
-        f"Deploy publishment status code : {response.status_code if response else 'None'}"
-    )
+#     LOGGER.info(
+#         f"Deploy publishment status code : {response.status_code if response else 'None'}"
+#     )
 
-    return success, errorMessage
+#     return success, errorMessage
 
 def post_sample_test_data(  tenantUrl, testToken,  technicalServiceName="vra_demo", testEngine="ant", bugs=random.randint(0,7), codeCoverage=random.randint(30,100), codeSmells=random.randint(0,8), hostName="13.82.103.214:8080", env="production",   releaseName=f"release-{time.strftime('%Y.%m.%d')}", skipped=random.randint(0,5), status=random.choice(["passed","failed"])  ):
     

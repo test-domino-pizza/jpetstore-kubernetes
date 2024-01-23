@@ -258,3 +258,25 @@ LICENSES = [{
 			"Status": "Allowed"
 		}
 	]
+
+class DependencyLicenseTemplate:
+    def __init__(self):
+        self.dependency_homepage = None
+        self.dependency_install_path = None
+        self.dependency_name = None
+        self.dependency_package_manager = None
+        self.dependency_version = None
+        self.license_link = None
+        self.license_name = None
+        self.status = None
+        self.provider_href = None
+        self.technical_service_name = None
+        self.technicalserviceoverride = True
+        
+def nanoseconds_to_seconds(nanoseconds: int) -> int:
+    seconds = nanoseconds / 1e9
+    return int( seconds )
+
+def nanoseconds_to_microseconds(nanoseconds: int) -> int:
+    microseconds = nanoseconds / 1000
+    return int( microseconds )
