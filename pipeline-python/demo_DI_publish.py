@@ -15,7 +15,7 @@ parser.add_argument("-BT", "--build_token", dest = "buildToken", default = "", h
 parser.add_argument("-U", "--userID", dest = "userID", default = "", help="ModernOps user id")
 parser.add_argument("-K", "--apikey", dest = "apikey", default = "", help="ModernOps api key")
 parser.add_argument("-O", "--orderID", dest = "orderID", default = "", help="Order id")
-parser.add_argument("-F", "--fulfillmentID", dest = "fulfillmentID", default = "", help="Fulfillment id")
+parser.add_argument( "-F", "--fulfillmentID",  dest = "fulfillmentID",  default = "", help="Fulfillment id" )
 
 # parser.add_argument("-DT", "--deploy_token", dest = "deployToken", default = "", help="DevOps intelligence Deploy token")
 # parser.add_argument("-TT", "--test_token", dest = "testToken", default = "", help="DevOps intelligence test token")

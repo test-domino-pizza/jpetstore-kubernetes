@@ -23,7 +23,8 @@ stages:
       vmImage: ubuntu-latest
     steps:
 
-    
+
+
     - task: Docker@2
       displayName: Build and push petstore web
       inputs:
@@ -36,4 +37,4 @@ stages:
       inputs:
         scriptSource: 'filePath'
         scriptPath: 'pipeline-python/demo_DI_publish.py'
-        arguments: '--tenant https://learnmodernops-api.bridge.kyndryl.com/ --build_token $(BUILD_TOKEN)'
+        arguments: '--tenant https://learnmodernops-api.bridge.kyndryl.com/ --build_token $(BUILD_TOKEN) -U $(USER_ID) -K $(APIKEY) -O $(ORDER_ID) -F $(FULFILLMENT_ID)'
