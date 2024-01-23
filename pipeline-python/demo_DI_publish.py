@@ -212,6 +212,81 @@ def publish_di_data(technicalService="Petstore on Azure", status="failed"):
     
     # post_secure_licenses( tenantUrl=tenantUrl, secureToken=args.secureToken, technicalService=technicalService )
 
+def web_request( url, requestMethod=requests.get, LOGGER=logging.getLogger(__name__), **kwargs ):
+    """
+        Use This function in the same way as requests library.
+        Note: Send the request method as a function parameter as shown in the default 'requestMethod'
+
+        returns: tuple( response, errorString )
+    """
+        
+    try:
+        response = requestMethod( url=url, **kwargs )
+        response_is_sucessful = response.status_code >= 200 and response.status_code < 300
+        if response_is_sucessful:
+        
+            return response,  ""
+        LOGGER.warn(
+            f"""Non 200 response from {url}
+            args: {kwargs}                
+            method:  {requestMethod.__name__}
+            response: {response.text}
+            response status code: {response.status_code}
+            """
+        )
+    
+        return response, f"status code: {response.status_code}"
+
+    except requests.Timeout or requests.ConnectionError or requests.ConnectTimeout:
+        LOGGER.error(
+            f"""Fail to make request
+                args: {kwargs}
+                error: Fail to connect to {url}  
+                """
+        )
+        
+        return None,  f"Fail to connect to {url}"
+
+    except Exception as error:
+        ## TODO: add the line number and the filename to the error log
+        LOGGER.error(
+            f"""Fail to make request to {url} (No params included)
+                args: {kwargs}
+                error:  {error.args} 
+                """
+        )
+        return None, f"Fail - {error} "
+
+
+
+def try_web_request( url, requestMethod=requests.get, LOGGER=logging.getLogger(__name__), max_attempts=3, secondsToRetry=60, endProcessIfFail=False,  **kwargs ):
+    for attempt in range(max_attempts):
+
+        try:
+            if attempt != 0: LOGGER.info(f"Retring, attempt: {attempt}")
+            response, error = web_request( url=url, requestMethod=requestMethod, LOGGER=LOGGER, **kwargs )
+            
+            if response == None:
+                continue
+
+            remote_server_error =  response.status_code > 499 and response.status_code < 600
+            if not remote_server_error:
+                return response, error
+
+            LOGGER.warning(f"Unable to get response from {url}")
+            time.sleep(secondsToRetry)
+            
+        except BaseException as error:
+            LOGGER.error(f"Fail on attempt {attempt}: {error.args}")
+            return None, error
+
+    error = f"Fail to get response from '{url}' after {max_attempts} attempts in {secondsToRetry * max_attempts } seconds" 
+    LOGGER.warning( error )
+
+    if endProcessIfFail:
+        exit(1)
+    return None, error
+
 
 
 def update_post_provisioning_hook( tenantApiUrl, userID, apikey, orderID, fulfillmentID, status="Completed", endProcessIfFails=False ):
@@ -233,6 +308,12 @@ def update_post_provisioning_hook( tenantApiUrl, userID, apikey, orderID, fulfil
         'apikey': apikey,
         'Content-Type': 'application/json'
     }
+    response, _ = try_web_request( requestMethod=requests.post, url=ENDPOINT, headers=headers, json=payload)
+    if response:
+        LOGGER.info(f"Successfully updated order {orderID} in {tenantApiUrl}")
+        return
+    elif endProcessIfFails:
+        exit(1) 
 
 
 def main():
