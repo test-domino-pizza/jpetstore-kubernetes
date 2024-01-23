@@ -11,7 +11,7 @@ resources:
       connection: ModernOps
 
 variables:
-  ORDER_ID: 'default'
+  ORDER_ID: '$(ORDER_ID)'
   FULFILLMENT_ID: '$(FULFILLMENT_ID:)'
   tag: '$(Build.BuildId)'
 
