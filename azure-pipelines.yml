@@ -11,6 +11,8 @@ resources:
       connection: ModernOps
 
 variables:
+  ORDER_ID: 'default'
+  FULFILLMENT_ID: 'defaultfulf'
   tag: '$(Build.BuildId)'
 
 stages:
