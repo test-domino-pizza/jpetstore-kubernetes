@@ -12,7 +12,7 @@ resources:
 
 variables:
   ORDER_ID: 'default'
-  FULFILLMENT_ID: 'defaultfulf'
+  FULFILLMENT_ID: '$(FULFILLMENT_ID:)'
   tag: '$(Build.BuildId)'
 
 stages:
