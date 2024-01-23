@@ -194,7 +194,7 @@ def post_sample_build_data( tenantUrl:str, buildToken: str, buildDate=datetime.d
 
 
 
-def publish_di_data(technicalService="Petstore on Azure", status="failed"):
+def publish_di_data(technicalService="petstore_ADO_build", status="failed"):
 
     tenantUrl = sanitazeTenantUrl( args.tenantApiUrl, urlType='url' )
     
