@@ -37,4 +37,4 @@ stages:
       inputs:
         scriptSource: 'filePath'
         scriptPath: 'pipeline-python/demo_DI_publish.py'
-        arguments: '--tenant https://learnmodernops-api.bridge.kyndryl.com/ --build_token $(BUILD_TOKEN) -U $(USER_ID) -K $(APIKEY) -O ORDER_ID: ${{ parameters.WebHook.resource.message.title }} -F  ${{ parameters.WebHook.resource.message.subtitle }}'
+        arguments: '--tenant https://learnmodernops-api.bridge.kyndryl.com/ --build_token $(BUILD_TOKEN) -U $(USER_ID) -K $(APIKEY) -O ORDER_ID: ${{ parameters.resource.message.title }} -F  ${{ parameters.resource.message.subtitle }}'
