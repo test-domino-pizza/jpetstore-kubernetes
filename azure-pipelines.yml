@@ -7,8 +7,8 @@ trigger:
 
 resources:
   webhooks:
-    - webhook: ModernOps
-      connection: ModernOps
+    - webhook: petstore_build
+      connection: petstore_build
 
 variables:
   tag: '$(Build.BuildId)'
@@ -37,4 +37,4 @@ stages:
       inputs:
         scriptSource: 'filePath'
         scriptPath: 'pipeline-python/demo_DI_publish.py'
-        arguments: '--tenant https://learnmodernops-api.bridge.kyndryl.com/ --build_token $(BUILD_TOKEN) -U $(USER_ID) -K $(APIKEY) -O  ${{ parameters.ModernOps.resource.message.title }} -F  ${{ parameters.ModernOps.resource.message.subtitle }}'
+        arguments: '--tenant https://learnmodernops-api.bridge.kyndryl.com/ --build_token $(BUILD_TOKEN) -U $(USER_ID) -K $(APIKEY) -O  ${{ parameters.petstore_build.resource.message.title }} -F  ${{ parameters.petstore_build.resource.message.subtitle }}'
