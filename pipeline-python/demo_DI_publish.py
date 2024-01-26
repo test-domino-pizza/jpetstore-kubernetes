@@ -12,10 +12,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--tenant", dest = "tenantApiUrl", default = "mcmp-learn-api.multilcoud-ibm.com", help="Tenant API base url\nEx: mcmp-learn-api.multilcoud-ibm.com")
 
 parser.add_argument("-BT", "--build_token", dest = "buildToken", default = "", help="DevOps intelligence Build token")
-parser.add_argument("-U", "--userID", dest = "userID", default = "", help="ModernOps user id")
-parser.add_argument("-K", "--apikey", dest = "apikey", default = "", help="ModernOps api key")
-parser.add_argument("-O", "--orderID", dest = "orderID", default = "", help="Order id")
-parser.add_argument( "-F", "--fulfillmentID",  dest = "fulfillmentID",  default = "", help="Fulfillment id" )
+# parser.add_argument("-U", "--userID", dest = "userID", default = "", help="ModernOps user id")
+# parser.add_argument("-K", "--apikey", dest = "apikey", default = "", help="ModernOps api key")
+# parser.add_argument("-O", "--orderID", dest = "orderID", default = "", help="Order id")
+# parser.add_argument( "-F", "--fulfillmentID",  dest = "fulfillmentID",  default = "", help="Fulfillment id" )
 
 # parser.add_argument("-DT", "--deploy_token", dest = "deployToken", default = "", help="DevOps intelligence Deploy token")
 # parser.add_argument("-TT", "--test_token", dest = "testToken", default = "", help="DevOps intelligence test token")
@@ -321,13 +321,13 @@ def main():
 
     publish_di_data( status=os.getenv("PIPELINE_STATUS","passed")  )
     
-    update_post_provisioning_hook( 
-        tenantApiUrl=args.tenantApiUrl,  
-        userID=args.userID,  
-        apikey=args.apikey,  
-        orderID=args.orderID,  
-        fulfillmentID=args.fulfillmentID  
-    )
+    # update_post_provisioning_hook( 
+    #     tenantApiUrl=args.tenantApiUrl,  
+    #     userID=args.userID,  
+    #     apikey=args.apikey,  
+    #     orderID=args.orderID,  
+    #     fulfillmentID=args.fulfillmentID  
+    # )
     
 
 
