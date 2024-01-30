@@ -176,7 +176,7 @@ def post_sample_build_data( tenantUrl:str, buildToken: str, buildDate=datetime.d
                'repo_url': 'https://github.com/bridge-demo/jpetstore-kubernetes.git', 
                'technical_service_name': technicalService, 
                'technical_service_override': True, 
-               'href': os.getenv("BUILD_URL", 'https://dev.azure.com/Kyndryl/CTO%20Demo%20Environments/_build')
+               'href': os.getenv("BUILD_URL", 'https://dev.azure.com/jamesxavier2/ModernOpsDemoEng/_build')
             }
     LOGGER.info(f"Build payload: {payload}")
 
