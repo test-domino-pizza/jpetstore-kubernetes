@@ -108,6 +108,8 @@ kubectl delete -f jpetstore.yaml
 kubectl delete secret mysql-creds
 
 ## Updating the readme file
+
+##Updating readme file for test
   
 
 
