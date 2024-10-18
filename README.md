@@ -98,6 +98,8 @@ You are now ready to use the UI to shop for a pet or query the store by sending 
 
    ![](readme_images/petstore.png)
 
+
+Going from branch 1 to Branch 2
 ## Clean up:
 
 ```bash
