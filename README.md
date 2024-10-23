@@ -100,6 +100,9 @@ You are now ready to use the UI to shop for a pet or query the store by sending 
 
 ## Clean up:
 
+
+
+Updating the document 
 ```bash
 # Use "helm delete" to delete the two apps
 kubectl delete -f jpetstore.yaml
