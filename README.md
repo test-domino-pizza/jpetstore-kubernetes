@@ -10,7 +10,6 @@ This demo modernizes an existing Java web application (JPetStore) by:
 [![Containerized Applications with IBM Cloud Kubernetes Service](readme_images/youtube_play.png)](https://youtu.be/26RjSa0UZp0 "Containerized Applications with IBM Cloud Kubernetes")
 
 ## Before you begin
-
 Follow the below steps to create resources used in this demo. You will create a Kubernetes cluster.
 
 1. Create azure database for mysql servers and note down username, servername and password.[](https://docs.microsoft.com/en-us/azure/mysql/quickstart-create-mysql-server-database-using-azure-portal)
@@ -28,6 +27,8 @@ Clone the demo repository:
 git clone https://github.ibm.com/mcmp-demo/jpetstore-kubernetes.git
 cd jpetstore-kubernetes
 ```
+
+Adding more commits to the PR for doing the changes 
 
 #### Code structure
 
