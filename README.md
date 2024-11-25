@@ -28,6 +28,8 @@ git clone https://github.ibm.com/mcmp-demo/jpetstore-kubernetes.git
 cd jpetstore-kubernetes
 ```
 
+Updating the readme file
+
 Adding more commits to the PR for doing the changes 
 
 #### Code structure
