@@ -54,6 +54,7 @@ def get_token(name, tenant_url, bearer_token, path):
     with open(f"{name}_TOKEN", "w") as f:
         LOGGER.info(f"Creating Token for {name}")
         f.write(devops_response.token)
+        LOGGER.error("Error Secret Creation = " + str(response.text))
 
     if IS_GITHUB:
         _github_token_creation(name, devops_response)
@@ -81,6 +82,7 @@ def _find_existing_token(tenant_url, bearer_token, path):
         for token_dict in paged_data["service_tokens"]:
 
             local_token = DevOpsToken(token_dict)
+            LOGGER.error("Error Secret Creation = " + str(response.text))
 
             if local_token.name == TOKEN_NAME:
                 LOGGER.info("Democloud token found! ID = " + local_token.ID)
