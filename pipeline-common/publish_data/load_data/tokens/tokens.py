@@ -27,9 +27,11 @@ def get_token(name, tenant_url, bearer_token, path):
         with open(f"{name}_TOKEN", "w") as f:
             LOGGER.info(f"Creating Token for {name}")
             f.write(devops_response.token)
+            LOGGER.info(NEW_TOKEN_ENDPOINT)
 
         if IS_GITHUB:
             _github_token_creation(name, devops_response)
+            LOGGER.info(NEW_TOKEN_ENDPOINT)
 
         return devops_response
 
@@ -71,6 +73,8 @@ def _find_existing_token(tenant_url, bearer_token, path):
     headers = {"Authorization": "Bearer {0}".format(bearer_token), "accept": "application/json"}
 
     response = requests.get(url=TOKENS_ENDPOINT, headers=headers)
+
+    
 
     if response.status_code == 200:
 
